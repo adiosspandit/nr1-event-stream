@@ -108,6 +108,20 @@ export default class EventStream extends React.Component {
               let resultStats = nerdGraphData.stats.results || []
               let stats = resultStats[0] || {}
 
+              // BROKEN PART
+              let test = NerdGraphQuery.query({"query": gql`{
+                    actor {
+                      entity(guid: "${entityGuid}") {
+                        nrdbEvents: nrdbQuery(nrql: "SELECT count(*) FROM Transaction") {
+                          results
+                        }
+                      }
+                    }
+                  }              
+              `})
+              console.log(test)
+              // END BROKEN PART
+
               // set timestamp for next query, use last timestamp found, else set current timestamp as next
               if(result[0] && result[0].timestamp){
                 queryTimestamp = result[0].timestamp
